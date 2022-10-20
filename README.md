@@ -38,3 +38,37 @@ For more info on the Kubernetes integration for Spinnaker, visit:
   https://www.spinnaker.io/reference/providers/kubernetes-v2/
 ```
 
+### Initial Test
+
+For the initial test we will deploy a simple Nginx deployment.
+
+Follow [this](https://earthly.dev/blog/spinnaker-kubernetes/) article to create
+a simple nginx deployment to see if spinnaker works against the cluster properly.
+
+## Install Tekton 
+
+Run the following command to deploy Tekton in the `tekton-pipelines` namespace.
+
+```
+kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.40.2/release.yaml
+```
+
+### Initial Test
+
+Follow [https://earthly.dev/blog/building-k8s-tekton/] to create the resources and deploy your first Tekton Pipeline.
+
+
+
+## Install Knative
+
+https://developingfordata.com/category/kubernetes/knative/
+
+## The WebUI to check the cloudevents
+
+https://developingfordata.com/2020/02/17/knative-eventing-part-2-streaming-cloudevents-to-a-ui/
+
+https://github.com/josiemundi/knative-web-event-display/blob/master/yaml/010-deployment.yaml
+
+## Spinnaker Cloudevents Blogpost
+
+https://iamondemand.com/blog/jenkins-and-spinnaker-turbocharge-your-ci-cd-with-cloud-native/
