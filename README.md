@@ -1,12 +1,18 @@
 # PoC for CI/CD Interoperability using CDEvents
 
-CI/CD systems involved in PoC
+Technologies involved in PoC
 - Spinnaker
 - Uffizzi
 - Tekton
+- Knative
+- CDEvents
+- Cloudevents Player
+- Spinnaker CDEvents provider
+- Uffizzi CDEvents provider
 
-Event Broker used
-- KNative
+# Architecture
+
+![Alt text](static/images/architecture.jpg?raw=true "CI/CD Interoperability PoC Architecture")
 
 # Prerequisites
 
@@ -15,8 +21,10 @@ Event Broker used
 Install knative on minikube using 
 https://knative.dev/docs/install/quickstart-install
 
-https://developingfordata.com/category/kubernetes/knative/
-
+The following command needs to be running for the user to be able to access all the Kntaive services.
+```
+minikube tunnel --profile knative
+```
 
 ## Install Spinnaker using Helm
 
@@ -75,13 +83,29 @@ kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previou
 
 Follow [https://earthly.dev/blog/building-k8s-tekton/] to create the resources and deploy your first Tekton Pipeline.
 
-## Sockeye Cloudevents UI
+## CloudEvents Player
 
-https://github.com/n3wscott/sockeye#from-source
+This is the UI which we are going to use to check what cloudevents are moving in and out of the broker. This will give us a good idea of the entire system. 
+https://github.com/ruromero/cloudevents-player 
+
+```
+kn service create cloudevents-player \
+--image ruromero/cloudevents-player:latest \
+--env BROKER_URL=http://broker-ingress.knative-eventing.svc.cluster.local/default/example-broker
+```
+
+## CloudEvents Providers
+
+These providers are extra tools installed for us to better propogate CDEvents throughtout the entire system.
+
+### CDEventer for Tekton
+
+https://github.com/afrittoli/cdeventer
+
+### Uffizzi CDEvents Provider
+
+### Spinnaker CDEvents Provider
 
 ## Spinnaker Cloudevents Blogpost
 
 https://iamondemand.com/blog/jenkins-and-spinnaker-turbocharge-your-ci-cd-with-cloud-native/
-
-# Architecture
-
