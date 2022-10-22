@@ -19,3 +19,17 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: docker-login
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cdevents-triggers-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cdevents-pipeline-role
+subjects:
+- kind: ServiceAccount
+  name: tekton-triggers-example-sa

@@ -124,6 +124,10 @@ tkn hub install task kubernetes-actions --version 0.2
 3. Create TriggerBinding and update TriggerTemplate to take in the commit from which the build needs to be completed.
 4. Create Trigger. Create EventListener. Reference the Trigger in the EventListener.
 
+Port forward the EventListener and use a `curl` command like the one given below to test it.
+```
+curl -X POST localhost:8080 -H 'Content-Type: application/json' -d '{"head_commit":{"id":"1234"}}'
+```
 
 ## CloudEvents Providers
 
