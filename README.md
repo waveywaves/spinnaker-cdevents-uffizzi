@@ -113,7 +113,13 @@ Install the [CDEventer Controller](https://github.com/afrittoli/cdeventer) for T
 
 ### Setup the flow for Tekton CDEvents propogation
 
-1. Create the Secret, Service Account, Role, RoleBinding and Pipeline. 
+1. Create the Secret, Service Account, Role, RoleBinding, install the required Tasks using the below command and the Pipeline.
+```
+tkn hub install task git-clone --version 0.6
+tkn hub install task git-clone --version 0.6
+tkn hub install task buildah --version 0.3
+tkn hub install task kubernetes-actions --version 0.2
+```
 2. Create TriggerTemplate with PipelineRun which will trigger the Pipeline
 3. Create TriggerBinding and update TriggerTemplate to take in the commit from which the build needs to be completed.
 4. Create Trigger. Create EventListener. Reference the Trigger in the EventListener.

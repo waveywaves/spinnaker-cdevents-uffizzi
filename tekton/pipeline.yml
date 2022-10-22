@@ -7,7 +7,7 @@ spec:
     - name: IMAGE
       description: Image description
       type: string
-      default: "docker.io/waveywaves/spinnaker-cdevents-uffizzi"
+      default: "docker.io/waveywaves/bookstore"
     - name: TAG
       description: Preferred tag
       default: latest
@@ -22,7 +22,7 @@ spec:
           workspace: linked-workspace
       params:
         - name: url
-          value: https://github.com/waveywaves/spinnaker-cdevents-uffizzi
+          value: https://github.com/juteq/bookStore
         - name: subdirectory
           value: ""
         - name: deleteExisting

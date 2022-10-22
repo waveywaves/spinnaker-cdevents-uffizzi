@@ -1,16 +1,16 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: nodejs-pipelinerun-
+  generateName: cdevents-pipelinerun-
 spec:
   serviceAccountName: docker-login
   pipelineRef:
-    name: nodejs-pipeline
+    name: cdevents-pipeline
   params:
     - name: IMAGE
-      value: waveywaves/bookstore
+      value: docker.io/waveywaves/bookstore
     - name: TAG
-      value: latest
+      value: tekton-1
   workspaces:
     - name: linked-workspace
       volumeClaimTemplate:
