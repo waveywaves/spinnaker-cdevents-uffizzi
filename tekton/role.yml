@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: nodejs-pipeline-role
+  name: cdevents-pipeline-role
 rules:
 - apiGroups: ["extensions", "apps", ""]
   resources: ["services", "deployments", "pods","pvc","job"]
@@ -11,11 +11,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: nodejs-pipeline-role-binding
+  name: cdevents-pipeline-role-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: nodejs-pipeline-role
+  name: cdevents-pipeline-role
 subjects:
 - kind: ServiceAccount
   name: docker-login

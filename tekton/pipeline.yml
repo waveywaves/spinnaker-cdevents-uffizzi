@@ -1,13 +1,13 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: nodejs-pipeline
+  name: cdevents-pipeline
 spec:
   params:
     - name: IMAGE
       description: Image description
       type: string
-      default: "docker.io/waveywaves/bookstore"
+      default: "docker.io/waveywaves/spinnaker-cdevents-uffizzi"
     - name: TAG
       description: Preferred tag
       default: latest
@@ -22,7 +22,7 @@ spec:
           workspace: linked-workspace
       params:
         - name: url
-          value: https://github.com/waveywaves/juteq-bookStore
+          value: https://github.com/waveywaves/spinnaker-cdevents-uffizzi
         - name: subdirectory
           value: ""
         - name: deleteExisting
@@ -50,7 +50,7 @@ spec:
       params:
         - name: script
           value: |
-            kubectl apply --filename https://raw.githubusercontent.com/waveywaves/spinnaker-cdevents-uffizzi/main/tekton/initial_test/deploy.yml
+            kubectl apply --filename https://raw.githubusercontent.com/waveywaves/spinnaker-cdevents-uffizzi/main/tekton/deploy.yml
       workspaces:
         - name: manifest-dir
           workspace: linked-workspace

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-deployment
+  name: cdevents-demo
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nodejs-app
+      app: cdevents-demo
   template:
     metadata:
       labels: 
-        app: nodejs-app
+        app: cdevents-demo
     spec:                   
       containers: 
-      - name: nodejs-app 
+      - name: cdevents-demo
         image: waveywaves/bookstore:latest
         ports:
         - containerPort: 5000
@@ -21,12 +21,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodejs-service
+  name: cdevents-demo
 spec:
   type: LoadBalancer
   selector:
-    app: nodejs-app
+    app: cdevents-demo
   ports:
-    - port: 80
+    - port: 
       targetPort: 8081
       nodePort: 30001
