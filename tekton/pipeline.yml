@@ -42,15 +42,3 @@ spec:
           value: "src"
         - name: FORMAT
           value: "docker"
-    - name: create-deployment
-      taskRef:
-        name: kubernetes-actions
-      runAfter:
-        - build-push-image
-      params:
-        - name: script
-          value: |
-            kubectl apply --filename https://raw.githubusercontent.com/waveywaves/spinnaker-cdevents-uffizzi/main/tekton/deploy.yml
-      workspaces:
-        - name: manifest-dir
-          workspace: linked-workspace
