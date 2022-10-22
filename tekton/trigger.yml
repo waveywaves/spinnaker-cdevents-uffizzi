@@ -1,0 +1,47 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: cdevents-pipelinerun-template
+spec:
+  params:
+  - name: gitcommitid
+    description: The git revision
+    default: main
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: cdevents-pipelinerun-
+    spec:
+      serviceAccountName: tekton-triggers-example-sa
+      pipelineRef:
+        name: cdevents-pipeline
+      params:
+        - name: IMAGE
+          value: docker.io/waveywaves/bookstore
+        - name: TAG
+          value: $(tt.params.gitcommitid)
+      workspaces:
+        - name: linked-workspace
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: pipeline-eventlistener
+spec:
+  # cloudEventURI: http://cloudevents-player.default.10.106.98.97.sslip.io
+  serviceAccountName: tekton-triggers-example-sa
+  triggers:
+  - name: pullrequest-trigger
+    bindings:
+    - name: gitcommitid
+      value: $(body.head_commit.id)
+    template:
+      ref: cdevents-pipelinerun-template
