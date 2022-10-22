@@ -64,24 +64,24 @@ For more info on the Kubernetes integration for Spinnaker, visit:
   https://www.spinnaker.io/reference/providers/kubernetes-v2/
 ```
 
-### Initial Test
-
-For the initial test we will deploy a simple Nginx deployment.
-
-Follow [this](https://earthly.dev/blog/spinnaker-kubernetes/) article to create
-a simple nginx deployment to see if spinnaker works against the cluster properly.
-
 ## Install Tekton 
 
 Run the following command to deploy Tekton in the `tekton-pipelines` namespace.
 
 ```
-kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.40.2/release.yaml
+kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 ```
 
-### Initial Test
+After installing Tekton install Triggers whihch will help us create Triggers which can execute Pipelines based on Events. 
+```
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/interceptors.yaml
+```
 
-Follow [https://earthly.dev/blog/building-k8s-tekton/] to create the resources and deploy your first Tekton Pipeline.
+Install the Tekton Dashboard from where we can monitor all the Tekton Pipelines.
+```
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
+```
 
 ## CloudEvents Player
 
