@@ -6,9 +6,22 @@ Technologies involved in PoC
 - Tekton
 - Knative
 - CDEvents
-- Cloudevents Player
-- Spinnaker CDEvents provider
-- Uffizzi CDEvents provider
+- CloudEvents Player
+- Spinnaker CDEvents Translator
+- Uffizzi CDEvents Translator
+
+# Proof-of-Concept Overview
+
+In this PoC for CI/CD Interoperability using CDEvents, we have multiple technologies which are going to perform roles based on the events broadcasted across this system. The following steps define the flow of the entire system and the related entities which are triggered.
+Note: A lot more events apart from the ones mentioned below would be broadcasted. Only the events which trigger other processes in the system are highlighted below.
+
+1. A Pull Request is created to the Source Version Control Repository. This broadcasts a `change created` CDEvent which triggers the Uffizzi CDEvents Translator to create a Pull Request Preview Environment for the developer who has created the PR. Upon successful creation of the PR env `environment created` CDEvent is broadcasted.
+
+2. Once the PR is merged, a `change merged` CDEvent is broadcasted. This is read by the broker. If this change had metadata related to creating a new release, then the Tekton EventListener would be called by a Trigger to build and push this image. Once the build is done and the artifact is pushed, the `build finished` event would be broadcaster  
+
+3. The `build finished` event is read by the broker and propogated to the Spinnaker CDEvents Translator. The translator will convert this to a payload with the `artifact` url which would be used to deploy a new service.
+
+4. After the service is deployed, a `service created` CDEvent would be propogated across the system letting us know that the flow is complete.
 
 # Architecture
 
@@ -94,9 +107,11 @@ Install the Tekton Dashboard from where we can monitor all the Tekton Pipelines.
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
 ```
 
-### CDEventer for Tekton
+### Install the CDEventer for Tekton
 
 Install the [CDEventer Controller](https://github.com/afrittoli/cdeventer) for Tekton which will provide a Custom Task which can be used to send CDEvents.
+
+### Setup the flow for Tekton CDEvents propogation
 
 ## CloudEvents Providers
 
