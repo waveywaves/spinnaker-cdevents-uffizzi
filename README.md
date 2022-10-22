@@ -107,6 +107,13 @@ Install the Tekton Dashboard from where we can monitor all the Tekton Pipelines.
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
 ```
 
+### Set `enable-api-fields` to `alpha` to allow Tekton to execute `Runs`
+
+```
+kubectl edit configmap feature-flags
+kubectl edit configmap feature-flags-triggers
+```
+
 ### Install the CDEventer for Tekton
 
 Install the [CDEventer Controller](https://github.com/afrittoli/cdeventer) for Tekton which will provide a Custom Task which can be used to send CDEvents.

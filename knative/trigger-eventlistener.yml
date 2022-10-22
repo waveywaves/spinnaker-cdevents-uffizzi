@@ -1,0 +1,44 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: ce-github-pr-created-trigger
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: dev.cdevents.change.created.0.1.0
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: el-uffizzi-eventlistener
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: ce-github-pr-merge-trigger
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: dev.cdevents.change.merged.0.1.0
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: el-pipeline-eventlistener
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: ce-build-finished-trigger
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: dev.cdevents.build.finished.0.1.0
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: el-spinnaker-eventlistener

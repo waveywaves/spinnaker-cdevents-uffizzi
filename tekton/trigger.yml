@@ -30,13 +30,14 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+
 ---
 apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
   name: pipeline-eventlistener
 spec:
-  # cloudEventURI: http://cloudevents-player.default.10.106.98.97.sslip.io
+  cloudEventURI: http://cloudevents-player.tekton-pipelines.10.106.98.97.sslip.io
   serviceAccountName: tekton-triggers-example-sa
   triggers:
   - name: pullrequest-trigger
