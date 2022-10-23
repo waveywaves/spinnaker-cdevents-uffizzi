@@ -1,18 +1,18 @@
-apiVersion: eventing.knative.dev/v1
-kind: Trigger
-metadata:
-  name: ce-github-pr-created-trigger
-spec:
-  broker: default
-  filter:
-    attributes:
-      type: dev.cdevents.change.created.0.1.0
-  subscriber:
-    ref:
-      apiVersion: v1
-      kind: Service
-      name: el-uffizzi-eventlistener
----
+# apiVersion: eventing.knative.dev/v1
+# kind: Trigger
+# metadata:
+#   name: ce-github-pr-created-trigger
+# spec:
+#   broker: default
+#   filter:
+#     attributes:
+#       type: dev.cdevents.change.created.0.1.0
+#   subscriber:
+#     ref:
+#       apiVersion: v1
+#       kind: Service
+#       name: el-uffizzi-eventlistener
+# ---
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
@@ -23,22 +23,25 @@ spec:
     attributes:
       type: dev.cdevents.change.merged.0.1.0
   subscriber:
-    ref:
-      apiVersion: v1
-      kind: Service
-      name: el-pipeline-eventlistener
----
-apiVersion: eventing.knative.dev/v1
-kind: Trigger
-metadata:
-  name: ce-build-finished-trigger
-spec:
-  broker: default
-  filter:
-    attributes:
-      type: dev.cdevents.build.finished.0.1.0
-  subscriber:
-    ref:
-      apiVersion: v1
-      kind: Service
-      name: el-spinnaker-eventlistener
+    # provided absolute URI for the port
+    uri: http://el-pipeline-eventlistener.tekton-pipelines.svc.cluster.local:8080
+    # ref:
+    #   apiVersion: v1
+    #   kind: Service
+    #   name: el-pipeline-eventlistener
+    #   namespace: tekton-pipelines
+# ---
+# apiVersion: eventing.knative.dev/v1
+# kind: Trigger
+# metadata:
+#   name: ce-build-finished-trigger
+# spec:
+#   broker: default
+#   filter:
+#     attributes:
+#       type: dev.cdevents.build.finished.0.1.0
+#   subscriber:
+#     ref:
+#       apiVersion: v1
+#       kind: Service
+#       name: el-spinnaker-eventlistener
